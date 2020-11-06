@@ -3,18 +3,25 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		221A4E282555A8ED00643FCD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E272555A8ED00643FCD /* AppDelegate.swift */; };
-		221A4E2A2555A8ED00643FCD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E292555A8ED00643FCD /* SceneDelegate.swift */; };
-		221A4E2C2555A8ED00643FCD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E2B2555A8ED00643FCD /* ContentView.swift */; };
 		221A4E2E2555A8EE00643FCD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 221A4E2D2555A8EE00643FCD /* Assets.xcassets */; };
 		221A4E312555A8EE00643FCD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 221A4E302555A8EE00643FCD /* Preview Assets.xcassets */; };
 		221A4E342555A8EE00643FCD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 221A4E322555A8EE00643FCD /* LaunchScreen.storyboard */; };
 		221A4E3F2555A8EE00643FCD /* pumpkinTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E3E2555A8EE00643FCD /* pumpkinTests.swift */; };
 		221A4E4A2555A8EE00643FCD /* pumpkinUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E492555A8EE00643FCD /* pumpkinUITests.swift */; };
+		221A4E612555AAC800643FCD /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 221A4E602555AAC800643FCD /* ComposableArchitecture */; };
+		221A4E722555ABE400643FCD /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E6B2555ABE400643FCD /* AppState.swift */; };
+		221A4E732555ABE400643FCD /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E6C2555ABE400643FCD /* Router.swift */; };
+		221A4E742555ABE400643FCD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E6D2555ABE400643FCD /* SceneDelegate.swift */; };
+		221A4E752555ABE400643FCD /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E6F2555ABE400643FCD /* Login.swift */; };
+		221A4E762555ABE400643FCD /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E702555ABE400643FCD /* Register.swift */; };
+		221A4E772555ABE400643FCD /* AuthenticationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E712555ABE400643FCD /* AuthenticationClient.swift */; };
+		221A4E792555AC4800643FCD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E782555AC4800643FCD /* ContentView.swift */; };
+		221A4E842555AC8C00643FCD /* LandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E812555AC8C00643FCD /* LandingView.swift */; };
+		221A4E852555AC8C00643FCD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E822555AC8C00643FCD /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,9 +43,6 @@
 
 /* Begin PBXFileReference section */
 		221A4E242555A8ED00643FCD /* pumpkin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pumpkin.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		221A4E272555A8ED00643FCD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		221A4E292555A8ED00643FCD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		221A4E2B2555A8ED00643FCD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		221A4E2D2555A8EE00643FCD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		221A4E302555A8EE00643FCD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		221A4E332555A8EE00643FCD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +53,15 @@
 		221A4E452555A8EE00643FCD /* pumpkinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pumpkinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		221A4E492555A8EE00643FCD /* pumpkinUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pumpkinUITests.swift; sourceTree = "<group>"; };
 		221A4E4B2555A8EE00643FCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		221A4E6B2555ABE400643FCD /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		221A4E6C2555ABE400643FCD /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		221A4E6D2555ABE400643FCD /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		221A4E6F2555ABE400643FCD /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		221A4E702555ABE400643FCD /* Register.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
+		221A4E712555ABE400643FCD /* AuthenticationClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationClient.swift; sourceTree = "<group>"; };
+		221A4E782555AC4800643FCD /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		221A4E812555AC8C00643FCD /* LandingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandingView.swift; sourceTree = "<group>"; };
+		221A4E822555AC8C00643FCD /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				221A4E612555AAC800643FCD /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,9 +113,11 @@
 		221A4E262555A8ED00643FCD /* pumpkin */ = {
 			isa = PBXGroup;
 			children = (
-				221A4E272555A8ED00643FCD /* AppDelegate.swift */,
-				221A4E292555A8ED00643FCD /* SceneDelegate.swift */,
-				221A4E2B2555A8ED00643FCD /* ContentView.swift */,
+				221A4E822555AC8C00643FCD /* HomeView.swift */,
+				221A4E812555AC8C00643FCD /* LandingView.swift */,
+				221A4E782555AC4800643FCD /* ContentView.swift */,
+				221A4E6E2555ABE400643FCD /* Onboarding */,
+				221A4E6A2555ABE400643FCD /* Root */,
 				221A4E2D2555A8EE00643FCD /* Assets.xcassets */,
 				221A4E322555A8EE00643FCD /* LaunchScreen.storyboard */,
 				221A4E352555A8EE00643FCD /* Info.plist */,
@@ -136,6 +152,26 @@
 			path = pumpkinUITests;
 			sourceTree = "<group>";
 		};
+		221A4E6A2555ABE400643FCD /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				221A4E6B2555ABE400643FCD /* AppState.swift */,
+				221A4E6C2555ABE400643FCD /* Router.swift */,
+				221A4E6D2555ABE400643FCD /* SceneDelegate.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		221A4E6E2555ABE400643FCD /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				221A4E6F2555ABE400643FCD /* Login.swift */,
+				221A4E702555ABE400643FCD /* Register.swift */,
+				221A4E712555ABE400643FCD /* AuthenticationClient.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -152,6 +188,9 @@
 			dependencies = (
 			);
 			name = pumpkin;
+			packageProductDependencies = (
+				221A4E602555AAC800643FCD /* ComposableArchitecture */,
+			);
 			productName = pumpkin;
 			productReference = 221A4E242555A8ED00643FCD /* pumpkin.app */;
 			productType = "com.apple.product-type.application";
@@ -224,6 +263,9 @@
 				Base,
 			);
 			mainGroup = 221A4E1B2555A8ED00643FCD;
+			packageReferences = (
+				221A4E5F2555AAC800643FCD /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = 221A4E252555A8ED00643FCD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -267,9 +309,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				221A4E282555A8ED00643FCD /* AppDelegate.swift in Sources */,
-				221A4E2A2555A8ED00643FCD /* SceneDelegate.swift in Sources */,
-				221A4E2C2555A8ED00643FCD /* ContentView.swift in Sources */,
+				221A4E772555ABE400643FCD /* AuthenticationClient.swift in Sources */,
+				221A4E792555AC4800643FCD /* ContentView.swift in Sources */,
+				221A4E732555ABE400643FCD /* Router.swift in Sources */,
+				221A4E852555AC8C00643FCD /* HomeView.swift in Sources */,
+				221A4E762555ABE400643FCD /* Register.swift in Sources */,
+				221A4E842555AC8C00643FCD /* LandingView.swift in Sources */,
+				221A4E722555ABE400643FCD /* AppState.swift in Sources */,
+				221A4E752555ABE400643FCD /* Login.swift in Sources */,
+				221A4E742555ABE400643FCD /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,6 +642,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		221A4E5F2555AAC800643FCD /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		221A4E602555AAC800643FCD /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 221A4E5F2555AAC800643FCD /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 221A4E1C2555A8ED00643FCD /* Project object */;
 }
