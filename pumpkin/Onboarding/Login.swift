@@ -11,119 +11,52 @@ import SwiftUI
 import ComposableArchitecture
 
 public struct LoginState: Equatable {
-  public var alert: AlertState<LoginAction>?
-  public var email = ""
-  public var isFormValid = false
-  public var isLoginRequestInFlight = false
-  public var password = ""
-  public var twoFactor: TwoFactorState?
-
-  public init() {}
+  var isLoggedIn = false
 }
 
 public enum LoginAction: Equatable {
-  case alertDismissed
-  case emailChanged(String)
-  case passwordChanged(String)
-  case loginButtonTapped
-  case loginResponse(Result<AuthenticationResponse, AuthenticationError>)
-  case twoFactor(TwoFactorAction)
-  case twoFactorDismissed
+  case start
+  case logIn(String, String)
+  case didLogIn
 }
 
 public struct LoginEnvironment {
+  public var dummyData: DummyDependencies
   public var authenticationClient: AuthenticationClient
   public var mainQueue: AnySchedulerOf<DispatchQueue>
 
   public init(
+    dummyData: DummyDependencies,
     authenticationClient: AuthenticationClient,
     mainQueue: AnySchedulerOf<DispatchQueue>
   ) {
+    self.dummyData = dummyData
     self.authenticationClient = authenticationClient
     self.mainQueue = mainQueue
   }
 }
 
-public let loginReducer =
-  twoFactorReducer
-  .optional()
-  .pullback(
-    state: \.twoFactor,
-    action: /LoginAction.twoFactor,
-    environment: {
-      TwoFactorEnvironment(
-        authenticationClient: $0.authenticationClient,
-        mainQueue: $0.mainQueue
-      )
+let loginReducer = Reducer<LoginState, LoginAction, LoginEnvironment> { state, action, environment in
+  switch action {
+  case .start:
+    state.isLoggedIn = environment.dummyData.isLoggedIn
+    if state.isLoggedIn {
+      return Effect(value: .didLogIn)
     }
-  )
-  .combined(
-    with: Reducer<LoginState, LoginAction, LoginEnvironment> {
-      state, action, environment in
-      switch action {
-      case .alertDismissed:
-        state.alert = nil
-        return .none
-
-      case let .emailChanged(email):
-        state.email = email
-        state.isFormValid = !state.email.isEmpty && !state.password.isEmpty
-        return .none
-
-      case let .loginResponse(.success(response)):
-        state.isLoginRequestInFlight = false
-        if response.twoFactorRequired {
-          state.twoFactor = TwoFactorState(token: response.token)
-        }
-        return .none
-
-      case let .loginResponse(.failure(error)):
-        state.alert = .init(title: .init(error.localizedDescription))
-        state.isLoginRequestInFlight = false
-        return .none
-
-      case let .passwordChanged(password):
-        state.password = password
-        state.isFormValid = !state.email.isEmpty && !state.password.isEmpty
-        return .none
-
-      case .loginButtonTapped:
-        state.isLoginRequestInFlight = true
-        return environment.authenticationClient
-          .login(LoginRequest(email: state.email, password: state.password))
-          .receive(on: environment.mainQueue)
-          .catchToEffect()
-          .map(LoginAction.loginResponse)
-
-      case .twoFactor:
-        return .none
-
-      case .twoFactorDismissed:
-        state.twoFactor = nil
-        return .cancel(id: TwoFactorTearDownToken())
-      }
-    }
-  )
-
+  case .logIn(let username, let password):
+    return environment.dummyData.logIn(username: username, password: password)
+      .receive(on: environment.mainQueue)
+      .catchToEffect()
+      .map { _ in LoginAction.start }
+  case .didLogIn:
+    break
+  }
+  return .none
+}
 
 public struct LoginView: View {
-  struct ViewState: Equatable {
-    var alert: AlertState<LoginAction>?
-    var email: String
-    var isActivityIndicatorVisible: Bool
-    var isFormDisabled: Bool
-    var isLoginButtonDisabled: Bool
-    var password: String
-    var isTwoFactorActive: Bool
-  }
-
-  enum ViewAction {
-    case alertDismissed
-    case emailChanged(String)
-    case loginButtonTapped
-    case passwordChanged(String)
-    case twoFactorDismissed
-  }
+  @State var username: String = ""
+  @State var password: String = ""
 
   let store: Store<LoginState, LoginAction>
 
@@ -132,54 +65,54 @@ public struct LoginView: View {
   }
 
   public var body: some View {
-    WithViewStore(self.store.scope(state: { $0.view }, action: LoginAction.view)) { viewStore in
+    WithViewStore(store) { viewStore in
       VStack {
-        Form {
-          Section(
-            header: Text(
-              """
-              To login use any email and "password" for the password. If your email contains the \
-              characters "2fa" you will be taken to a two-factor flow, and on that screen you can \
-              use "1234" for the code.
-              """
-            )
-          ) { EmptyView() }
+        Spacer()
+        TextField("Username", text: self.$username)
+          .foregroundColor(.black)
+          .multilineTextAlignment(.center)
+          .padding(8)
+          .background(Color.white)
+          .cornerRadius(8)
+        SecureField("Password", text: self.$password)
+        .foregroundColor(.black)
+        .multilineTextAlignment(.center)
+        .padding(8)
+        .background(Color.white)
+        .cornerRadius(8)
+        Button("Log In") {
+          viewStore.send(.logIn(self.username, self.password))
         }
+        .foregroundColor(.white)
+        .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+        .cornerRadius(8)
+
+        Spacer()
       }
-      .alert(self.store.scope(state: { $0.alert }), dismiss: .alertDismissed)
-    }
-    .navigationBarTitle("Login")
-  }
-}
-
-extension LoginAction {
-  static func view(_ localAction: LoginView.ViewAction) -> Self {
-    switch localAction {
-    case .alertDismissed:
-      return .alertDismissed
-    case .twoFactorDismissed:
-      return .twoFactorDismissed
-    case let .emailChanged(email):
-      return .emailChanged(email)
-    case .loginButtonTapped:
-      return .loginButtonTapped
-    case let .passwordChanged(password):
-      return .passwordChanged(password)
+      .padding(32)
+      .background(Color.orange)
+      .edgesIgnoringSafeArea(.all)
     }
   }
 }
 
-extension LoginState {
-  var view: LoginView.ViewState {
-    LoginView.ViewState(
-      alert: self.alert,
-      email: self.email,
-      isActivityIndicatorVisible: self.isLoginRequestInFlight,
-      isFormDisabled: self.isLoginRequestInFlight,
-      isLoginButtonDisabled: !self.isFormValid,
-      password: self.password,
-      isTwoFactorActive: self.twoFactor != nil
-    )
+struct LoginView_Previews: PreviewProvider {
+  static var previews: some View {
+    NavigationView {
+      LoginView(
+        store: Store(
+          initialState: LoginState(),
+          reducer: loginReducer,
+          environment: LoginEnvironment(
+            dummyData: DummyDependencies(),
+            authenticationClient: AuthenticationClient(
+              login: { _ in Effect(value: .init(token: "deadbeef", twoFactorRequired: false)) },
+              twoFactor: { _ in Effect(value: .init(token: "deadbeef", twoFactorRequired: false)) }
+            ),
+            mainQueue: DispatchQueue.main.eraseToAnyScheduler()
+          )
+        )
+      )
+    }
   }
 }
-

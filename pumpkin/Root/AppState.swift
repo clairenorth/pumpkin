@@ -9,54 +9,65 @@
 import ComposableArchitecture
 import Dispatch
 
-enum Route: Equatable {
-  case loggedOut
-  case home
-
-  static func == (lhs: Route, rhs: Route) -> Bool {
-    switch (lhs, rhs) {
-    case (.loggedOut, .loggedOut):
-      return true
-    case (.home, .home):
-      return true
-    default:
-      return false
-    }
+// Hardcode the backend in right now, start not logged in.
+public class DummyDependencies {
+  let isLoggedIn = false
+  func logIn(username: String, password: String) -> Effect<Void, Error> {
+    return .none
   }
 }
 
-struct AppState: Equatable {
+public struct AppState: Equatable {
+  // Initializing loginState only will direct user through Login first.
   var login: LoginState? = LoginState()
-  var register: RegisterState?
-  var route: Route = .loggedOut
+  var home: HomeState?
 
   init() {}
 }
 
-enum AppAction: Equatable {
+public enum AppAction: Equatable {
   case login(LoginAction)
-  case register(RegisterAction)
+  case home(HomeAction)
 }
 
-struct AppEnvironment {
+// Holds all of the dependencies our feature needs to do its job
+public struct AppEnvironment {
+  var dummyData: DummyDependencies
   var authenticationClient: AuthenticationClient
   var mainQueue: AnySchedulerOf<DispatchQueue>
 
   init(
+    dummyData: DummyDependencies,
     authenticationClient: AuthenticationClient,
     mainQueue: AnySchedulerOf<DispatchQueue>
   ) {
+    self.dummyData = dummyData
     self.authenticationClient = authenticationClient
     self.mainQueue = mainQueue
   }
 }
 
-let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
-  switch action {
-  case .login:
-    state.route = .loggedOut
-  case .register:
-    state.route = .loggedOut
+// Glues together the state, action and environment into a cohesive package
+public let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
+  loginReducer.optional().pullback(
+    state: \.login,
+    action: /AppAction.login,
+    environment: {
+      LoginEnvironment(
+        dummyData: $0.dummyData,
+        authenticationClient: $0.authenticationClient,
+        mainQueue: $0.mainQueue
+      )
+    }
+  ),
+  Reducer { state, action, _ in
+    switch action {
+    case .login:
+      state.home = HomeState()
+      state.login = nil
+      return .none
+    case .home:
+      return .none
+    }
   }
-  return .none
-}
+)
