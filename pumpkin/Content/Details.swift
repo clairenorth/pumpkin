@@ -10,7 +10,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct DetailsState: Equatable {
-  var description: String
+  var device: Device
   var currentAnimation: Animation?
 }
 
@@ -21,8 +21,7 @@ public enum DetailsAction: Equatable {
 struct DetailsEnvironment {}
 
 let detailsReducer = Reducer<DetailsState, DetailsAction, DetailsEnvironment> { state, action, environment in
-  print("<OB> in the details reducer")
-   switch action {
+  switch action {
   }
 }
 
@@ -31,9 +30,13 @@ struct DetailsView: View {
 
   let store: Store<DetailsState, DetailsAction>
 
+  public init(store: Store<DetailsState, DetailsAction>) {
+    self.store = store
+  }
+
   var body: some View {
     WithViewStore(self.store) { viewStore in
-      Text("Details for \(viewStore.description)")
+      Text("Details for \(viewStore.device.description)")
     }
   }
 }

@@ -10,10 +10,8 @@ import ComposableArchitecture
 import SwiftUI
 
 /// Representing a device controlled by the app.
-struct Device: Equatable, Identifiable {
-  let id: UUID
+struct Device: Equatable {
   var description = ""
-  var isConnected = false
 }
 
 /// Representing a purchased animation that can be used on any device.
@@ -23,55 +21,56 @@ struct Animation: Equatable, Identifiable {
 }
 
 struct HomeState: Equatable {
-  static func == (lhs: HomeState, rhs: HomeState) -> Bool {
-    lhs.devices == rhs.devices
+  var rows: IdentifiedArrayOf<Row> = [
+    .init(device: Device(description: "Front yard pumpkin"), id: UUID()),
+    .init(device: Device(description: "Back yard pumpkin"), id: UUID())
+  ]
+
+  struct Row: Equatable, Identifiable {
+    var device: Device
+    let id: UUID
   }
 
-  var devices: IdentifiedArrayOf<Device> = [
-    Device(
-      id: UUID(),
-      description: "Front yard pumpkin",
-      isConnected: true
-    ),
-    Device(
-      id: UUID(),
-      description: "Back yard pumpkin",
-      isConnected: false
-    )
-  ]
   var animations: [Animation] = []
-  var details: DetailsState?
+  var selection: Identified<Row.ID, DetailsState?>?
 }
 
 public enum HomeAction: Equatable {
-  case select(id: UUID?)
   case details(DetailsAction)
+  case select(id: UUID?)
 }
 
 // Holds all of the dependencies our feature needs to do its job
 struct HomeEnvironment {}
 
-let homeReducer = Reducer<HomeState, HomeAction, HomeEnvironment>
-  .combine(
-    Reducer { state, action, environment in
-      switch action {
-      case .select(let id):
-        guard let id = id,
-          let item = state.devices[id: id] else {
-          return .none
-        }
-        state.details = DetailsState(description: state.devices[id: id]?.description ?? "")
-        print("<OB> set: ")
-        return .none
-      case .details:
-        return .none
-      }
-    }.debug(),
-    detailsReducer.optional().pullback(
-      state: \.details,
+let homeReducer =
+  detailsReducer
+    .optional()
+    .pullback(state: \Identified.value, action: .self, environment: { $0 })
+    .optional()
+    .pullback(
+      state: \HomeState.selection,
       action: /HomeAction.details,
       environment: { _ in DetailsEnvironment() }
-    ).debug()
+    )
+  .combined(
+    with: Reducer<
+      HomeState, HomeAction, HomeEnvironment
+    > { state, action, environment in
+      struct CancelId: Hashable {}
+      switch action {
+      case let .select(id: .some(id)):
+        guard let device = state.rows[id: id]?.device else { return .none }
+        state.selection = Identified(DetailsState(device: device), id: id)
+        return .none
+      case .select(id: .none):
+        if let selection = state.selection, let device = selection.value?.device {
+          state.rows[id: selection.id]?.device = device
+        }
+        state.selection = nil
+        return .cancel(id: CancelId())
+      }
+    }
   )
 
 // The Home page view
@@ -84,9 +83,22 @@ struct HomeView: View {
     NavigationView {
       WithViewStore(self.store) { viewStore in
         List {
-          ForEach(viewStore.devices) { device in
-            Button(device.description) {
-              viewStore.send(.select(id: device.id))
+          ForEach(viewStore.rows) { row in
+            NavigationLink(
+               destination: IfLetStore(
+                 self.store.scope(
+                  state: { $0.selection?.value },
+                  action: HomeAction.details),
+                 then: DetailsView.init(store:),
+                 else: ActivityIndicator()
+               ),
+               tag: row.id,
+               selection: viewStore.binding(
+                 get: { $0.selection?.id },
+                 send: HomeAction.select(id:)
+               )
+             ) {
+              Text(row.device.description)
             }
           }
         }
@@ -101,17 +113,9 @@ struct HomeView_Previews: PreviewProvider {
     HomeView(
       store: Store(
         initialState: HomeState(
-          devices: [
-            Device(
-              id: UUID(),
-              description: "Front yard pumpkin",
-              isConnected: true
-            ),
-            Device(
-              id: UUID(),
-              description: "Back yard pumpkin",
-              isConnected: false
-            )
+          rows: [
+            .init(device: Device(description: "Front yard pumpkin"), id: UUID()),
+            .init(device: Device(description: "Back yard pumpkin"), id: UUID())
           ],
           animations: [
             Animation(
