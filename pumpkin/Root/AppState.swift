@@ -6,14 +6,19 @@
 //  Copyright © 2020 Barnett, Olivia. All rights reserved.
 //
 
+import SwiftUI
 import ComposableArchitecture
 import Dispatch
 
 // Hardcode the backend in right now, start not logged in.
 public class DummyDependencies {
   let isLoggedIn = false
-  func logIn(username: String, password: String) -> Effect<Void, Error> {
-    return .none
+  func logIn(username: String, password: String) -> Effect<String, LoginApiError> {
+    return Effect(value: "yay")
+  }
+
+  func register(username: String, password: String) -> Effect<String, RegisterApiError> {
+    return Effect(value: "yay")
   }
 }
 
@@ -62,12 +67,44 @@ public let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
   ),
   Reducer { state, action, _ in
     switch action {
-    case .login:
+    case let .login(.didLogIn):
       state.home = HomeState()
       state.login = nil
       return .none
     case .home:
       return .none
+    case .login:
+      return .none
     }
   }
 )
+
+public struct AppView: View {
+  let store: Store<AppState, AppAction>
+
+  public init(store: Store<AppState, AppAction>) {
+    self.store = store
+  }
+
+  @ViewBuilder public var body: some View {
+    IfLetStore(self.store.scope(state: { $0.login }, action: AppAction.login)) { store in
+      NavigationView {
+        LoginView(store: store)
+      }
+      .navigationViewStyle(StackNavigationViewStyle())
+    }
+
+    IfLetStore(self.store.scope(state: { $0.home }, action: AppAction.home)) { store in
+      NavigationView {
+         HomeView(
+           store: Store(
+             initialState: HomeState(),
+             reducer: homeReducer,
+             environment: HomeEnvironment()
+           )
+         )
+      }
+      .navigationViewStyle(StackNavigationViewStyle())
+    }
+  }
+}

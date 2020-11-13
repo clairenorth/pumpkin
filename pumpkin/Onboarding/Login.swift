@@ -10,13 +10,21 @@ import Foundation
 import SwiftUI
 import ComposableArchitecture
 
+public struct LoginApiError: Error, Equatable {}
+public struct RegisterApiError: Error, Equatable {}
+
 public struct LoginState: Equatable {
   var isLoggedIn = false
+  var isLoginRequestInFlight = false
+  var isRegisterRequestInFlight = false
 }
 
 public enum LoginAction: Equatable {
   case start
-  case logIn(String, String)
+  case logInTapped(String, String)
+  case registerTapped(String, String)
+  case loginResponse(Result<String, LoginApiError>)
+  case registerResponse(Result<String, RegisterApiError>)
   case didLogIn
 }
 
@@ -43,15 +51,69 @@ let loginReducer = Reducer<LoginState, LoginAction, LoginEnvironment> { state, a
     if state.isLoggedIn {
       return Effect(value: .didLogIn)
     }
-  case .logIn(let username, let password):
+  case .logInTapped(let username, let password):
+    state.isLoginRequestInFlight = true
     return environment.dummyData.logIn(username: username, password: password)
       .receive(on: environment.mainQueue)
       .catchToEffect()
-      .map { _ in LoginAction.start }
+      .map(LoginAction.loginResponse)
+  case .registerTapped(let username, let password):
+    state.isRegisterRequestInFlight = true
+    return environment.dummyData.register(username: username, password: password)
+      .receive(on: environment.mainQueue)
+      .catchToEffect()
+      .map(LoginAction.registerResponse)
+  case let .loginResponse(.success(response)):
+    state.isLoginRequestInFlight = false
+    return Effect(value: LoginAction.didLogIn)
+  case let .loginResponse(.failure(error)):
+    state.isLoginRequestInFlight = false
+    return .none
+  case let .registerResponse(.success(response)):
+    state.isRegisterRequestInFlight = false
+    return Effect(value: LoginAction.didLogIn)
+  case let .registerResponse(.failure(error)):
+    state.isRegisterRequestInFlight = false
+    return .none
   case .didLogIn:
-    break
+    return .none
   }
   return .none
+}
+
+struct RegisterView : View {
+  @State var username: String = ""
+  @State var password: String = ""
+  let store: Store<LoginState, LoginAction>
+
+  public init(store: Store<LoginState, LoginAction>) {
+    self.store = store
+  }
+
+  public var body: some View {
+    WithViewStore(store) { viewStore in
+      VStack {
+        Spacer()
+        TextField("Username", text: self.$username)
+          .foregroundColor(.black)
+          .multilineTextAlignment(.center)
+          .textFieldStyle(RoundedBorderTextFieldStyle())
+          .padding(8)
+          .cornerRadius(8)
+        SecureField("Password", text: self.$password)
+          .foregroundColor(.black)
+          .multilineTextAlignment(.center)
+          .textFieldStyle(RoundedBorderTextFieldStyle())
+          .padding(8)
+          .cornerRadius(8)
+        Button("Submit") {
+          viewStore.send(.registerTapped(self.username, self.password))
+        }
+        Spacer()
+      }
+    .navigationBarTitle("Register")
+    }
+  }
 }
 
 public struct LoginView: View {
@@ -68,29 +130,32 @@ public struct LoginView: View {
     WithViewStore(store) { viewStore in
       VStack {
         Spacer()
+        Image("smart-deco-logo")
         TextField("Username", text: self.$username)
           .foregroundColor(.black)
           .multilineTextAlignment(.center)
+          .textFieldStyle(RoundedBorderTextFieldStyle())
           .padding(8)
-          .background(Color.white)
           .cornerRadius(8)
         SecureField("Password", text: self.$password)
-        .foregroundColor(.black)
-        .multilineTextAlignment(.center)
-        .padding(8)
-        .background(Color.white)
-        .cornerRadius(8)
+          .foregroundColor(.black)
+          .multilineTextAlignment(.center)
+          .textFieldStyle(RoundedBorderTextFieldStyle())
+          .padding(8)
+          .cornerRadius(8)
         Button("Log In") {
-          viewStore.send(.logIn(self.username, self.password))
+          viewStore.send(.logInTapped(self.username, self.password))
         }
-        .foregroundColor(.white)
+        .foregroundColor(.black)
         .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
         .cornerRadius(8)
-
+        NavigationLink(destination: RegisterView(store: store)) {
+          Text("Register")
+        }
+        .buttonStyle(PlainButtonStyle())
         Spacer()
       }
       .padding(32)
-      .background(Color.orange)
       .edgesIgnoringSafeArea(.all)
     }
   }

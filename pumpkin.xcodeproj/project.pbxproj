@@ -18,7 +18,6 @@
 		221A4E752555ABE400643FCD /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E6F2555ABE400643FCD /* Login.swift */; };
 		221A4E772555ABE400643FCD /* AuthenticationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E712555ABE400643FCD /* AuthenticationClient.swift */; };
 		221A4E872555B73200643FCD /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E862555B73200643FCD /* Home.swift */; };
-		221A4E8A2555C1C400643FCD /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E892555C1C400643FCD /* AppView.swift */; };
 		221A4E8C2555D8A300643FCD /* Details.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E8B2555D8A300643FCD /* Details.swift */; };
 		223256BF255B787A006BA48C /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223256BE255B787A006BA48C /* ActivityIndicator.swift */; };
 /* End PBXBuildFile section */
@@ -57,7 +56,6 @@
 		221A4E6F2555ABE400643FCD /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		221A4E712555ABE400643FCD /* AuthenticationClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationClient.swift; sourceTree = "<group>"; };
 		221A4E862555B73200643FCD /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
-		221A4E892555C1C400643FCD /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		221A4E8B2555D8A300643FCD /* Details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Details.swift; sourceTree = "<group>"; };
 		223256BE255B787A006BA48C /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -153,7 +151,6 @@
 			children = (
 				221A4E6B2555ABE400643FCD /* AppState.swift */,
 				221A4E6D2555ABE400643FCD /* SceneDelegate.swift */,
-				221A4E892555C1C400643FCD /* AppView.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -316,7 +313,6 @@
 			files = (
 				221A4E772555ABE400643FCD /* AuthenticationClient.swift in Sources */,
 				221A4E872555B73200643FCD /* Home.swift in Sources */,
-				221A4E8A2555C1C400643FCD /* AppView.swift in Sources */,
 				221A4E8C2555D8A300643FCD /* Details.swift in Sources */,
 				223256BF255B787A006BA48C /* ActivityIndicator.swift in Sources */,
 				221A4E722555ABE400643FCD /* AppState.swift in Sources */,
