@@ -10,25 +10,36 @@ import Foundation
 import SwiftUI
 import ComposableArchitecture
 
+// Hardcode the backend in right now, start not logged in.
+public class DummyDependencies {
+  let isLoggedIn = false
+  func logIn(email: String, password: String) -> Effect<String, LoginApiError> {
+    return Effect(value: "yay")
+  }
+
+  func register(email: String, password: String) -> Effect<String, RegisterApiError> {
+    return Effect(value: "yay")
+  }
+}
+
 public struct LoginApiError: Error, Equatable {}
 public struct RegisterApiError: Error, Equatable {}
 
 public struct LoginState: Equatable {
   var isLoggedIn = false
   var isLoginRequestInFlight = false
-  var isRegisterRequestInFlight = false
+  var register = RegisterState()
 }
 
 public enum LoginAction: Equatable {
   case start
-  case logInTapped(String, String)
-  case registerTapped(String, String)
+  case logIn(String, String)
   case loginResponse(Result<String, LoginApiError>)
-  case registerResponse(Result<String, RegisterApiError>)
   case didLogIn
+  case register(RegisterAction)
 }
 
-public struct LoginEnvironment {
+public struct OnboardingEnvironment {
   public var dummyData: DummyDependencies
   public var authenticationClient: AuthenticationClient
   public var mainQueue: AnySchedulerOf<DispatchQueue>
@@ -44,80 +55,57 @@ public struct LoginEnvironment {
   }
 }
 
-let loginReducer = Reducer<LoginState, LoginAction, LoginEnvironment> { state, action, environment in
-  switch action {
-  case .start:
-    state.isLoggedIn = environment.dummyData.isLoggedIn
-    if state.isLoggedIn {
-      return Effect(value: .didLogIn)
-    }
-  case .logInTapped(let username, let password):
-    state.isLoginRequestInFlight = true
-    return environment.dummyData.logIn(username: username, password: password)
-      .receive(on: environment.mainQueue)
-      .catchToEffect()
-      .map(LoginAction.loginResponse)
-  case .registerTapped(let username, let password):
-    state.isRegisterRequestInFlight = true
-    return environment.dummyData.register(username: username, password: password)
-      .receive(on: environment.mainQueue)
-      .catchToEffect()
-      .map(LoginAction.registerResponse)
-  case let .loginResponse(.success(response)):
-    state.isLoginRequestInFlight = false
-    return Effect(value: LoginAction.didLogIn)
-  case let .loginResponse(.failure(error)):
-    state.isLoginRequestInFlight = false
-    return .none
-  case let .registerResponse(.success(response)):
-    state.isRegisterRequestInFlight = false
-    return Effect(value: LoginAction.didLogIn)
-  case let .registerResponse(.failure(error)):
-    state.isRegisterRequestInFlight = false
-    return .none
-  case .didLogIn:
-    return .none
-  }
-  return .none
-}
-
-struct RegisterView : View {
-  @State var username: String = ""
-  @State var password: String = ""
-  let store: Store<LoginState, LoginAction>
-
-  public init(store: Store<LoginState, LoginAction>) {
-    self.store = store
-  }
-
-  public var body: some View {
-    WithViewStore(store) { viewStore in
-      VStack {
-        Spacer()
-        TextField("Username", text: self.$username)
-          .foregroundColor(.black)
-          .multilineTextAlignment(.center)
-          .textFieldStyle(RoundedBorderTextFieldStyle())
-          .padding(8)
-          .cornerRadius(8)
-        SecureField("Password", text: self.$password)
-          .foregroundColor(.black)
-          .multilineTextAlignment(.center)
-          .textFieldStyle(RoundedBorderTextFieldStyle())
-          .padding(8)
-          .cornerRadius(8)
-        Button("Submit") {
-          viewStore.send(.registerTapped(self.username, self.password))
+let loginReducer = registerReducer
+  .pullback(
+    state: \.register,
+    action: /LoginAction.register,
+    environment: { $0 }
+  ).combined(
+    with: Reducer<LoginState, LoginAction, OnboardingEnvironment> { state, action, environment in
+      switch action {
+      // Upon Login startup, check keychain for automatic login.
+      case .start:
+        if environment.authenticationClient.isSignedIn {
+          return Effect(value: .didLogIn)
         }
-        Spacer()
+        return .none
+      case .logIn(let email, let password):
+        state.isLoginRequestInFlight = true
+        let name = UIDevice.current.name
+        let user = User(name: name, email: email)
+
+        // Use keychain to save log in.
+        do {
+          try environment.authenticationClient.signIn(user, password: password)
+        }
+        catch {
+          print("Error signing in: \(error.localizedDescription)")
+        }
+
+        // Hit mock service
+        return environment.dummyData.logIn(email: email, password: password)
+          .receive(on: environment.mainQueue)
+          .catchToEffect()
+          .map(LoginAction.loginResponse)
+      case let .loginResponse(.success(response)):
+        state.isLoginRequestInFlight = false
+        return Effect(value: LoginAction.didLogIn)
+      case let .loginResponse(.failure(error)):
+        state.isLoginRequestInFlight = false
+        return .none
+      case .didLogIn:
+        return .none
+      case let .register(.didRegister(email, password)):
+        // On successful registration, log user in.
+        return Effect(value: LoginAction.logIn(email, password))
+      case .register:
+       return .none
       }
-    .navigationBarTitle("Register")
     }
-  }
-}
+)
 
 public struct LoginView: View {
-  @State var username: String = ""
+  @State var email: String = ""
   @State var password: String = ""
 
   let store: Store<LoginState, LoginAction>
@@ -131,7 +119,7 @@ public struct LoginView: View {
       VStack {
         Spacer()
         Image("smart-deco-logo")
-        TextField("Username", text: self.$username)
+        TextField("email", text: self.$email)
           .foregroundColor(.black)
           .multilineTextAlignment(.center)
           .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -144,12 +132,18 @@ public struct LoginView: View {
           .padding(8)
           .cornerRadius(8)
         Button("Log In") {
-          viewStore.send(.logInTapped(self.username, self.password))
+          viewStore.send(.logIn(self.email, self.password))
         }
+        .disabled(self.email.isEmpty || self.password.isEmpty)
         .foregroundColor(.black)
         .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
         .cornerRadius(8)
-        NavigationLink(destination: RegisterView(store: store)) {
+        NavigationLink(
+          destination: IfLetStore(
+            self.store.scope(state: { $0.register }, action: LoginAction.register),
+            then: RegisterView.init(store:)
+          )
+        ) {
           Text("Register")
         }
         .buttonStyle(PlainButtonStyle())
@@ -168,12 +162,9 @@ struct LoginView_Previews: PreviewProvider {
         store: Store(
           initialState: LoginState(),
           reducer: loginReducer,
-          environment: LoginEnvironment(
+          environment: OnboardingEnvironment(
             dummyData: DummyDependencies(),
-            authenticationClient: AuthenticationClient(
-              login: { _ in Effect(value: .init(token: "deadbeef", twoFactorRequired: false)) },
-              twoFactor: { _ in Effect(value: .init(token: "deadbeef", twoFactorRequired: false)) }
-            ),
+            authenticationClient: AuthenticationClient(),
             mainQueue: DispatchQueue.main.eraseToAnyScheduler()
           )
         )

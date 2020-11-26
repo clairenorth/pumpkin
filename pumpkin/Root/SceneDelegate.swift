@@ -19,10 +19,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       reducer: appReducer.debug(),
       environment: AppEnvironment(
         dummyData: DummyDependencies(),
-        authenticationClient: .live,
+        authenticationClient: AuthenticationClient(),
         mainQueue: DispatchQueue.main.eraseToAnyScheduler()
       )
     )
+    ViewStore(store).send(.login(.start))
     self.window = (scene as? UIWindowScene).map(UIWindow.init(windowScene:))
     self.window?.rootViewController = UIHostingController(rootView: AppView(store: store))
     self.window?.makeKeyAndVisible()

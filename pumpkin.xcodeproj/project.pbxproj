@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		221A4503256EF1530055C792 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4502256EF1520055C792 /* Auth.swift */; };
+		221A450C256EF1DA0055C792 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A450B256EF1DA0055C792 /* User.swift */; };
+		221A4511256EF1FB0055C792 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4510256EF1FB0055C792 /* Device.swift */; };
+		221A4516256EF21D0055C792 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4515256EF21D0055C792 /* Animation.swift */; };
+		221A451C256EF5B60055C792 /* Crypto in Frameworks */ = {isa = PBXBuildFile; productRef = 221A451B256EF5B60055C792 /* Crypto */; };
+		221A452E256F30F10055C792 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A452D256F30F10055C792 /* Register.swift */; };
 		221A4E2E2555A8EE00643FCD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 221A4E2D2555A8EE00643FCD /* Assets.xcassets */; };
 		221A4E312555A8EE00643FCD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 221A4E302555A8EE00643FCD /* Preview Assets.xcassets */; };
 		221A4E342555A8EE00643FCD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 221A4E322555A8EE00643FCD /* LaunchScreen.storyboard */; };
@@ -16,7 +22,6 @@
 		221A4E722555ABE400643FCD /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E6B2555ABE400643FCD /* AppState.swift */; };
 		221A4E742555ABE400643FCD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E6D2555ABE400643FCD /* SceneDelegate.swift */; };
 		221A4E752555ABE400643FCD /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E6F2555ABE400643FCD /* Login.swift */; };
-		221A4E772555ABE400643FCD /* AuthenticationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E712555ABE400643FCD /* AuthenticationClient.swift */; };
 		221A4E872555B73200643FCD /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E862555B73200643FCD /* Home.swift */; };
 		221A4E8C2555D8A300643FCD /* Details.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A4E8B2555D8A300643FCD /* Details.swift */; };
 		223256BF255B787A006BA48C /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223256BE255B787A006BA48C /* ActivityIndicator.swift */; };
@@ -40,6 +45,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		221A4502256EF1520055C792 /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
+		221A450B256EF1DA0055C792 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		221A4510256EF1FB0055C792 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		221A4515256EF21D0055C792 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		221A452D256F30F10055C792 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		221A4E242555A8ED00643FCD /* pumpkin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pumpkin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		221A4E2D2555A8EE00643FCD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		221A4E302555A8EE00643FCD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -54,7 +64,6 @@
 		221A4E6B2555ABE400643FCD /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		221A4E6D2555ABE400643FCD /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		221A4E6F2555ABE400643FCD /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
-		221A4E712555ABE400643FCD /* AuthenticationClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationClient.swift; sourceTree = "<group>"; };
 		221A4E862555B73200643FCD /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		221A4E8B2555D8A300643FCD /* Details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Details.swift; sourceTree = "<group>"; };
 		223256BE255B787A006BA48C /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
@@ -66,6 +75,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				221A4E612555AAC800643FCD /* ComposableArchitecture in Frameworks */,
+				221A451C256EF5B60055C792 /* Crypto in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +96,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		221A450A256EF1D10055C792 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				221A450B256EF1DA0055C792 /* User.swift */,
+				221A4510256EF1FB0055C792 /* Device.swift */,
+				221A4515256EF21D0055C792 /* Animation.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		221A4E1B2555A8ED00643FCD = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +129,7 @@
 		221A4E262555A8ED00643FCD /* pumpkin */ = {
 			isa = PBXGroup;
 			children = (
+				221A450A256EF1D10055C792 /* Models */,
 				221A4E882555B7BD00643FCD /* Content */,
 				221A4E6E2555ABE400643FCD /* Onboarding */,
 				221A4E6A2555ABE400643FCD /* Root */,
@@ -159,7 +180,8 @@
 			isa = PBXGroup;
 			children = (
 				221A4E6F2555ABE400643FCD /* Login.swift */,
-				221A4E712555ABE400643FCD /* AuthenticationClient.swift */,
+				221A452D256F30F10055C792 /* Register.swift */,
+				221A4502256EF1520055C792 /* Auth.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -192,6 +214,7 @@
 			name = pumpkin;
 			packageProductDependencies = (
 				221A4E602555AAC800643FCD /* ComposableArchitecture */,
+				221A451B256EF5B60055C792 /* Crypto */,
 			);
 			productName = pumpkin;
 			productReference = 221A4E242555A8ED00643FCD /* pumpkin.app */;
@@ -267,6 +290,7 @@
 			mainGroup = 221A4E1B2555A8ED00643FCD;
 			packageReferences = (
 				221A4E5F2555AAC800643FCD /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				221A451A256EF5B60055C792 /* XCRemoteSwiftPackageReference "swift-crypto" */,
 			);
 			productRefGroup = 221A4E252555A8ED00643FCD /* Products */;
 			projectDirPath = "";
@@ -311,13 +335,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				221A4E772555ABE400643FCD /* AuthenticationClient.swift in Sources */,
 				221A4E872555B73200643FCD /* Home.swift in Sources */,
+				221A452E256F30F10055C792 /* Register.swift in Sources */,
 				221A4E8C2555D8A300643FCD /* Details.swift in Sources */,
 				223256BF255B787A006BA48C /* ActivityIndicator.swift in Sources */,
+				221A4511256EF1FB0055C792 /* Device.swift in Sources */,
 				221A4E722555ABE400643FCD /* AppState.swift in Sources */,
+				221A450C256EF1DA0055C792 /* User.swift in Sources */,
 				221A4E752555ABE400643FCD /* Login.swift in Sources */,
 				221A4E742555ABE400643FCD /* SceneDelegate.swift in Sources */,
+				221A4516256EF21D0055C792 /* Animation.swift in Sources */,
+				221A4503256EF1530055C792 /* Auth.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,6 +672,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		221A451A256EF5B60055C792 /* XCRemoteSwiftPackageReference "swift-crypto" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-crypto";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.2;
+			};
+		};
 		221A4E5F2555AAC800643FCD /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -655,6 +691,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		221A451B256EF5B60055C792 /* Crypto */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 221A451A256EF5B60055C792 /* XCRemoteSwiftPackageReference "swift-crypto" */;
+			productName = Crypto;
+		};
 		221A4E602555AAC800643FCD /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 221A4E5F2555AAC800643FCD /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;

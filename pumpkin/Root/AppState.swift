@@ -10,18 +10,6 @@ import SwiftUI
 import ComposableArchitecture
 import Dispatch
 
-// Hardcode the backend in right now, start not logged in.
-public class DummyDependencies {
-  let isLoggedIn = false
-  func logIn(username: String, password: String) -> Effect<String, LoginApiError> {
-    return Effect(value: "yay")
-  }
-
-  func register(username: String, password: String) -> Effect<String, RegisterApiError> {
-    return Effect(value: "yay")
-  }
-}
-
 public struct AppState: Equatable {
   // Initializing loginState only will direct user through Login first.
   var login: LoginState? = LoginState()
@@ -58,18 +46,34 @@ public let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     state: \.login,
     action: /AppAction.login,
     environment: {
-      LoginEnvironment(
+      OnboardingEnvironment(
         dummyData: $0.dummyData,
         authenticationClient: $0.authenticationClient,
         mainQueue: $0.mainQueue
       )
     }
   ),
-  Reducer { state, action, _ in
+  homeReducer.optional().pullback(
+    state: \.home,
+    action: /AppAction.home,
+    environment: { _ in HomeEnvironment() }
+  ),
+  Reducer { state, action, environment in
     switch action {
-    case let .login(.didLogIn):
+    case .login(.didLogIn):
       state.home = HomeState()
       state.login = nil
+      return .none
+    case .home(.logOut):
+      do {
+        try environment.authenticationClient.signOut()
+      }
+      catch {
+        print("Error logging out: \(error.localizedDescription)")
+      }
+
+      state.home = nil
+      state.login = LoginState()
       return .none
     case .home:
       return .none
@@ -96,13 +100,7 @@ public struct AppView: View {
 
     IfLetStore(self.store.scope(state: { $0.home }, action: AppAction.home)) { store in
       NavigationView {
-         HomeView(
-           store: Store(
-             initialState: HomeState(),
-             reducer: homeReducer,
-             environment: HomeEnvironment()
-           )
-         )
+        HomeView(store: store)
       }
       .navigationViewStyle(StackNavigationViewStyle())
     }

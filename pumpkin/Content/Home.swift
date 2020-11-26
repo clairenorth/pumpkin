@@ -9,17 +9,6 @@
 import ComposableArchitecture
 import SwiftUI
 
-/// Representing a device controlled by the app.
-struct Device: Equatable {
-  var description = ""
-}
-
-/// Representing a purchased animation that can be used on any device.
-struct Animation: Equatable, Identifiable {
-  let id: UUID
-  var description = ""
-}
-
 struct HomeState: Equatable {
   var rows: IdentifiedArrayOf<Row> = [
     .init(device: Device(description: "Front yard pumpkin"), id: UUID()),
@@ -38,9 +27,9 @@ struct HomeState: Equatable {
 public enum HomeAction: Equatable {
   case details(DetailsAction)
   case select(id: UUID?)
+  case logOut
 }
 
-// Holds all of the dependencies our feature needs to do its job
 struct HomeEnvironment {}
 
 let homeReducer =
@@ -54,9 +43,7 @@ let homeReducer =
       environment: { _ in DetailsEnvironment() }
     )
   .combined(
-    with: Reducer<
-      HomeState, HomeAction, HomeEnvironment
-    > { state, action, environment in
+    with: Reducer<HomeState, HomeAction, HomeEnvironment> { state, action, environment in
       struct CancelId: Hashable {}
       switch action {
       case let .select(id: .some(id)):
@@ -69,6 +56,8 @@ let homeReducer =
         }
         state.selection = nil
         return .cancel(id: CancelId())
+      case .logOut:
+        return .none
       }
     }
   )
@@ -82,28 +71,32 @@ struct HomeView: View {
   var body: some View {
     NavigationView {
       WithViewStore(self.store) { viewStore in
-        List {
-          ForEach(viewStore.rows) { row in
-            NavigationLink(
-               destination: IfLetStore(
-                 self.store.scope(
-                  state: { $0.selection?.value },
-                  action: HomeAction.details),
-                 then: DetailsView.init(store:),
-                 else: ActivityIndicator()
-               ),
-               tag: row.id,
-               selection: viewStore.binding(
-                 get: { $0.selection?.id },
-                 send: HomeAction.select(id:)
-               )
-             ) {
-              Text(row.device.description)
+        VStack {
+          List {
+            ForEach(viewStore.rows) { row in
+              NavigationLink(
+                 destination: IfLetStore(
+                   self.store.scope(
+                    state: { $0.selection?.value },
+                    action: HomeAction.details),
+                   then: DetailsView.init(store:),
+                   else: ActivityIndicator()
+                 ),
+                 tag: row.id,
+                 selection: viewStore.binding(
+                   get: { $0.selection?.id },
+                   send: HomeAction.select(id:)
+                 )
+               ) {
+                Text(row.device.description)
+              }
             }
           }
         }
+        .navigationBarItems(trailing: Button("Log Out") {
+          viewStore.send(.logOut)
+        })
       }
-      .navigationBarTitle("Home")
     }
   }
 }
