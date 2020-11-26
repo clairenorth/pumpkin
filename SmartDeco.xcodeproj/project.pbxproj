@@ -50,15 +50,15 @@
 		221A4510256EF1FB0055C792 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		221A4515256EF21D0055C792 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		221A452D256F30F10055C792 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
-		221A4E242555A8ED00643FCD /* pumpkin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pumpkin.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		221A4E242555A8ED00643FCD /* SmartDeco.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartDeco.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		221A4E2D2555A8EE00643FCD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		221A4E302555A8EE00643FCD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		221A4E332555A8EE00643FCD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		221A4E352555A8EE00643FCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		221A4E3A2555A8EE00643FCD /* pumpkinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pumpkinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		221A4E3A2555A8EE00643FCD /* SmartDecoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartDecoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		221A4E3E2555A8EE00643FCD /* pumpkinTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pumpkinTests.swift; sourceTree = "<group>"; };
 		221A4E402555A8EE00643FCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		221A4E452555A8EE00643FCD /* pumpkinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pumpkinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		221A4E452555A8EE00643FCD /* SmartDecoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartDecoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		221A4E492555A8EE00643FCD /* pumpkinUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pumpkinUITests.swift; sourceTree = "<group>"; };
 		221A4E4B2555A8EE00643FCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		221A4E6B2555ABE400643FCD /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -109,9 +109,9 @@
 		221A4E1B2555A8ED00643FCD = {
 			isa = PBXGroup;
 			children = (
-				221A4E262555A8ED00643FCD /* pumpkin */,
-				221A4E3D2555A8EE00643FCD /* pumpkinTests */,
-				221A4E482555A8EE00643FCD /* pumpkinUITests */,
+				221A4E262555A8ED00643FCD /* SmartDeco */,
+				221A4E3D2555A8EE00643FCD /* SmartDecoTests */,
+				221A4E482555A8EE00643FCD /* SmartDecoUITests */,
 				221A4E252555A8ED00643FCD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -119,14 +119,14 @@
 		221A4E252555A8ED00643FCD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				221A4E242555A8ED00643FCD /* pumpkin.app */,
-				221A4E3A2555A8EE00643FCD /* pumpkinTests.xctest */,
-				221A4E452555A8EE00643FCD /* pumpkinUITests.xctest */,
+				221A4E242555A8ED00643FCD /* SmartDeco.app */,
+				221A4E3A2555A8EE00643FCD /* SmartDecoTests.xctest */,
+				221A4E452555A8EE00643FCD /* SmartDecoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		221A4E262555A8ED00643FCD /* pumpkin */ = {
+		221A4E262555A8ED00643FCD /* SmartDeco */ = {
 			isa = PBXGroup;
 			children = (
 				221A450A256EF1D10055C792 /* Models */,
@@ -138,7 +138,7 @@
 				221A4E352555A8EE00643FCD /* Info.plist */,
 				221A4E2F2555A8EE00643FCD /* Preview Content */,
 			);
-			path = pumpkin;
+			path = SmartDeco;
 			sourceTree = "<group>";
 		};
 		221A4E2F2555A8EE00643FCD /* Preview Content */ = {
@@ -149,22 +149,22 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		221A4E3D2555A8EE00643FCD /* pumpkinTests */ = {
+		221A4E3D2555A8EE00643FCD /* SmartDecoTests */ = {
 			isa = PBXGroup;
 			children = (
 				221A4E3E2555A8EE00643FCD /* pumpkinTests.swift */,
 				221A4E402555A8EE00643FCD /* Info.plist */,
 			);
-			path = pumpkinTests;
+			path = SmartDecoTests;
 			sourceTree = "<group>";
 		};
-		221A4E482555A8EE00643FCD /* pumpkinUITests */ = {
+		221A4E482555A8EE00643FCD /* SmartDecoUITests */ = {
 			isa = PBXGroup;
 			children = (
 				221A4E492555A8EE00643FCD /* pumpkinUITests.swift */,
 				221A4E4B2555A8EE00643FCD /* Info.plist */,
 			);
-			path = pumpkinUITests;
+			path = SmartDecoUITests;
 			sourceTree = "<group>";
 		};
 		221A4E6A2555ABE400643FCD /* Root */ = {
@@ -199,9 +199,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		221A4E232555A8ED00643FCD /* pumpkin */ = {
+		221A4E232555A8ED00643FCD /* SmartDeco */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 221A4E4E2555A8EE00643FCD /* Build configuration list for PBXNativeTarget "pumpkin" */;
+			buildConfigurationList = 221A4E4E2555A8EE00643FCD /* Build configuration list for PBXNativeTarget "SmartDeco" */;
 			buildPhases = (
 				221A4E202555A8ED00643FCD /* Sources */,
 				221A4E212555A8ED00643FCD /* Frameworks */,
@@ -211,18 +211,18 @@
 			);
 			dependencies = (
 			);
-			name = pumpkin;
+			name = SmartDeco;
 			packageProductDependencies = (
 				221A4E602555AAC800643FCD /* ComposableArchitecture */,
 				221A451B256EF5B60055C792 /* Crypto */,
 			);
 			productName = pumpkin;
-			productReference = 221A4E242555A8ED00643FCD /* pumpkin.app */;
+			productReference = 221A4E242555A8ED00643FCD /* SmartDeco.app */;
 			productType = "com.apple.product-type.application";
 		};
-		221A4E392555A8EE00643FCD /* pumpkinTests */ = {
+		221A4E392555A8EE00643FCD /* SmartDecoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 221A4E512555A8EE00643FCD /* Build configuration list for PBXNativeTarget "pumpkinTests" */;
+			buildConfigurationList = 221A4E512555A8EE00643FCD /* Build configuration list for PBXNativeTarget "SmartDecoTests" */;
 			buildPhases = (
 				221A4E362555A8EE00643FCD /* Sources */,
 				221A4E372555A8EE00643FCD /* Frameworks */,
@@ -233,14 +233,14 @@
 			dependencies = (
 				221A4E3C2555A8EE00643FCD /* PBXTargetDependency */,
 			);
-			name = pumpkinTests;
+			name = SmartDecoTests;
 			productName = pumpkinTests;
-			productReference = 221A4E3A2555A8EE00643FCD /* pumpkinTests.xctest */;
+			productReference = 221A4E3A2555A8EE00643FCD /* SmartDecoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		221A4E442555A8EE00643FCD /* pumpkinUITests */ = {
+		221A4E442555A8EE00643FCD /* SmartDecoUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 221A4E542555A8EE00643FCD /* Build configuration list for PBXNativeTarget "pumpkinUITests" */;
+			buildConfigurationList = 221A4E542555A8EE00643FCD /* Build configuration list for PBXNativeTarget "SmartDecoUITests" */;
 			buildPhases = (
 				221A4E412555A8EE00643FCD /* Sources */,
 				221A4E422555A8EE00643FCD /* Frameworks */,
@@ -251,9 +251,9 @@
 			dependencies = (
 				221A4E472555A8EE00643FCD /* PBXTargetDependency */,
 			);
-			name = pumpkinUITests;
+			name = SmartDecoUITests;
 			productName = pumpkinUITests;
-			productReference = 221A4E452555A8EE00643FCD /* pumpkinUITests.xctest */;
+			productReference = 221A4E452555A8EE00643FCD /* SmartDecoUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -279,7 +279,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 221A4E1F2555A8ED00643FCD /* Build configuration list for PBXProject "pumpkin" */;
+			buildConfigurationList = 221A4E1F2555A8ED00643FCD /* Build configuration list for PBXProject "SmartDeco" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -296,9 +296,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				221A4E232555A8ED00643FCD /* pumpkin */,
-				221A4E392555A8EE00643FCD /* pumpkinTests */,
-				221A4E442555A8EE00643FCD /* pumpkinUITests */,
+				221A4E232555A8ED00643FCD /* SmartDeco */,
+				221A4E392555A8EE00643FCD /* SmartDecoTests */,
+				221A4E442555A8EE00643FCD /* SmartDecoUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -370,12 +370,12 @@
 /* Begin PBXTargetDependency section */
 		221A4E3C2555A8EE00643FCD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 221A4E232555A8ED00643FCD /* pumpkin */;
+			target = 221A4E232555A8ED00643FCD /* SmartDeco */;
 			targetProxy = 221A4E3B2555A8EE00643FCD /* PBXContainerItemProxy */;
 		};
 		221A4E472555A8EE00643FCD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 221A4E232555A8ED00643FCD /* pumpkin */;
+			target = 221A4E232555A8ED00643FCD /* SmartDeco */;
 			targetProxy = 221A4E462555A8EE00643FCD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -511,10 +511,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"pumpkin/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"SmartDeco/Preview Content\"";
 				DEVELOPMENT_TEAM = 7WYB7XW95S;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = pumpkin/Info.plist;
+				INFOPLIST_FILE = SmartDeco/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -531,10 +531,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"pumpkin/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"SmartDeco/Preview Content\"";
 				DEVELOPMENT_TEAM = 7WYB7XW95S;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = pumpkin/Info.plist;
+				INFOPLIST_FILE = SmartDeco/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -564,7 +564,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pumpkin.app/pumpkin";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartDeco.app/SmartDeco";
 			};
 			name = Debug;
 		};
@@ -586,7 +586,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pumpkin.app/pumpkin";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartDeco.app/SmartDeco";
 			};
 			name = Release;
 		};
@@ -633,7 +633,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		221A4E1F2555A8ED00643FCD /* Build configuration list for PBXProject "pumpkin" */ = {
+		221A4E1F2555A8ED00643FCD /* Build configuration list for PBXProject "SmartDeco" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				221A4E4C2555A8EE00643FCD /* Debug */,
@@ -642,7 +642,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		221A4E4E2555A8EE00643FCD /* Build configuration list for PBXNativeTarget "pumpkin" */ = {
+		221A4E4E2555A8EE00643FCD /* Build configuration list for PBXNativeTarget "SmartDeco" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				221A4E4F2555A8EE00643FCD /* Debug */,
@@ -651,7 +651,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		221A4E512555A8EE00643FCD /* Build configuration list for PBXNativeTarget "pumpkinTests" */ = {
+		221A4E512555A8EE00643FCD /* Build configuration list for PBXNativeTarget "SmartDecoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				221A4E522555A8EE00643FCD /* Debug */,
@@ -660,7 +660,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		221A4E542555A8EE00643FCD /* Build configuration list for PBXNativeTarget "pumpkinUITests" */ = {
+		221A4E542555A8EE00643FCD /* Build configuration list for PBXNativeTarget "SmartDecoUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				221A4E552555A8EE00643FCD /* Debug */,
