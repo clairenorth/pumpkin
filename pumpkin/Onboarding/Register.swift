@@ -57,6 +57,14 @@ struct RegisterView : View {
     self.store = store
   }
 
+  var isButtonDisabled: Bool {
+    self.email.isEmpty || self.password.isEmpty
+  }
+
+  var buttonColor: Color {
+    return isButtonDisabled ? .gray : .black
+  }
+
   public var body: some View {
     WithViewStore(store) { viewStore in
       VStack {
@@ -76,7 +84,8 @@ struct RegisterView : View {
         Button("Submit") {
           viewStore.send(.registerTapped(self.email, self.password))
         }
-        .disabled(self.email.isEmpty || self.password.isEmpty)
+        .foregroundColor(buttonColor)
+        .disabled(isButtonDisabled)
         Spacer()
       }
     .navigationBarTitle("Register")

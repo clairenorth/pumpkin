@@ -114,12 +114,20 @@ public struct LoginView: View {
     self.store = store
   }
 
+  var isButtonDisabled: Bool {
+    self.email.isEmpty || self.password.isEmpty
+  }
+
+  var buttonColor: Color {
+    return isButtonDisabled ? .gray : .black
+  }
+
   public var body: some View {
     WithViewStore(store) { viewStore in
       VStack {
         Spacer()
         Image("smart-deco-logo")
-        TextField("email", text: self.$email)
+        TextField("Email", text: self.$email)
           .foregroundColor(.black)
           .multilineTextAlignment(.center)
           .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -134,8 +142,8 @@ public struct LoginView: View {
         Button("Log In") {
           viewStore.send(.logIn(self.email, self.password))
         }
-        .disabled(self.email.isEmpty || self.password.isEmpty)
-        .foregroundColor(.black)
+        .disabled(isButtonDisabled)
+        .foregroundColor(buttonColor)
         .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
         .cornerRadius(8)
         NavigationLink(
